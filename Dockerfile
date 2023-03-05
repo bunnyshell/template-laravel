@@ -49,6 +49,9 @@ RUN groupadd --force -g $WWWGROUP sail
 RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 sail
 
 COPY . .
+COPY .env.sample .env
+RUN php artisan key:generate 
+RUN composer install
 COPY docker/8.2/start-container /usr/local/bin/start-container
 COPY docker/8.2/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/8.2/php.ini /etc/php/8.2/cli/conf.d/99-sail.ini
