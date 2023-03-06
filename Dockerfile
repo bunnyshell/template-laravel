@@ -49,7 +49,7 @@ RUN groupadd --force -g $WWWGROUP sail
 RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 sail
 
 COPY --chown=sail:sail . .
-COPY .env.example .env
+COPY --chown=sail:sail .env.example .env
 USER sail
 RUN composer install
 RUN php artisan key:generate 
