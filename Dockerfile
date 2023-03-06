@@ -48,13 +48,16 @@ RUN setcap "cap_net_bind_service=+ep" /usr/bin/php8.2
 RUN groupadd --force -g $WWWGROUP sail
 RUN useradd -ms /bin/bash --no-user-group -g $WWWGROUP -u 1337 sail
 
-COPY . .
+COPY --chown=sail:sail . .
 COPY .env.example .env
+USER sail
 RUN composer install
 RUN php artisan key:generate 
 COPY docker/8.2/start-container /usr/local/bin/start-container
 COPY docker/8.2/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/8.2/php.ini /etc/php/8.2/cli/conf.d/99-sail.ini
+
+USER root
 RUN chmod +x /usr/local/bin/start-container
 
 EXPOSE 8000
