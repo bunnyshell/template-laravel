@@ -1,3 +1,7 @@
+upstream php-upstream {
+    server ${PHP_HOST}:9000;
+}
+
 server {
    
     # At the root location,
@@ -29,7 +33,7 @@ server {
         #NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
         include fastcgi_params;
         fastcgi_intercept_errors on;
-        fastcgi_pass ${FPM_HOST};
+        fastcgi_pass php-upstream;
         fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
     }
 
