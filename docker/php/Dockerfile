@@ -72,7 +72,7 @@ RUN composer install --optimize-autoloader --no-scripts --no-dev
 COPY --chown=docker:docker . .
 
 # - run some build scripts
-RUN composer run-script build
+#RUN composer run-script build
 
 
 
