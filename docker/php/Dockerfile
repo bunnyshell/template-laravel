@@ -40,8 +40,8 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_HOME=/tmp/composer
 
 # copy config files
-COPY .docker/php/php-customize.ini ${PHP_INI_DIR}/conf.d/docker-php-customize.ini
-COPY .docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY ./docker/php/php-customize.ini ${PHP_INI_DIR}/conf.d/docker-php-customize.ini
+COPY ./docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint"]
@@ -87,7 +87,7 @@ RUN apk add musl libgcc libstdc++ git curl wget bash ca-certificates gcompat ope
 RUN set -eux; \
 	install-php-extensions xdebug
 
-COPY .docker/php/php-ext-xdebug.ini ${PHP_INI_DIR}/conf.d/php-ext-xdebug.ini
+COPY docker/php/php-ext-xdebug.ini ${PHP_INI_DIR}/conf.d/php-ext-xdebug.ini
 
 RUN mv "$PHP_INI_DIR/php.ini" "$PHP_INI_DIR/php.ini-production"; \
 	mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
