@@ -57,7 +57,7 @@ WORKDIR /var/www
 USER docker
 
 # - copy composer.json and composer lock (optimise image build - copy only these files and run install, if these change rarely we can reuse this image layer too)
-COPY composer.json composer.lock symfony.lock ./
+COPY composer.json composer.lock ./
 
 
 
@@ -92,7 +92,7 @@ COPY docker/php/php-ext-xdebug.ini ${PHP_INI_DIR}/conf.d/php-ext-xdebug.ini
 RUN mv "$PHP_INI_DIR/php.ini" "$PHP_INI_DIR/php.ini-production"; \
 	mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
-VOLUME /var/www/var/
+#VOLUME /var/www/var/
 
 USER docker
 
