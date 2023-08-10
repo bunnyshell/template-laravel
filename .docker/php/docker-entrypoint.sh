@@ -46,7 +46,7 @@ fi
 # run migrations
 if [ "${RUN_MIGRATIONS:-false}" = "true" ]; then
   echo "running migrations ..."
-  cd $workdir && php artisan db:migrate;
+  cd $workdir && php artisan migrate;
 else
   echo "RUN_MIGRATIONS set to false, skipping migrations"
 fi
