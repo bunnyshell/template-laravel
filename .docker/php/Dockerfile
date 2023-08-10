@@ -1,60 +1,6 @@
 #syntax=docker/dockerfile:1.4
 
 
-# Stage 1: Build the Vue application
-
-FROM alpine as git-clone
-
-ARG GIT_TOKEN=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
-
-RUN mkdir /src
-WORKDIR /src
-
-RUN apk update && \
-    apk add --update git
-
-RUN git config --global url."https://${GIT_TOKEN}:@github.com/".insteadOf "https://github.com/"
-
-#RUN git clone https://github.com/flaminjoy/creative-studio-editor-components.git && \
- #   rm -rf creative-studio-editor-components/.git
-RUN git clone https://github.com/flaminjoy/admx-dashboard-frontend && \
-    rm -rf admx-dashboard-frontend/.git
-
-# ---------------------------------------------------------
-FROM node:14-alpine as vue-build-stage
-
-# Install build tools - needed for npm install (node-gyp)
-RUN apk add python3 make g++ bash
-
-RUN mkdir /app && mkdir /git-src
-WORKDIR /app
-COPY --from=git-clone /src/ ./git-src
-
-#RUN cp -a git-src/creative-studio-editor-components/ /app/generator.shared
-
-#RUN cd /app/generator.shared && npm install
-##RUN cp -a creative-studio-editor-components src/components/creative-studio/generator.shared
-
-
-# Install dependencies
-WORKDIR /app/git-src/admx-dashboard-frontend
-RUN npm install
-
-# Build the application
-RUN npm run build
-
-
-ENTRYPOINT [ "/bin/bash" ]
-
-# ----------------------------------------------------------
-# Stage 2: Serve the Vue application with Nginx
-FROM alpine as vue-distribution
-
-WORKDIR /var/www/html
-RUN mkdir -p /var/www/html/public_assets
-COPY --from=vue-build-stage /app/git-src/laravel/public/assets/ /var/www/html/public_assets
-
-
 # ----------------------------------------------------------
 
 FROM php:8.2-fpm-alpine AS base
@@ -81,6 +27,8 @@ RUN addgroup -g 1000 docker && \
 RUN apk add --no-cache \
     nano \
     git
+
+RUN apk add npm
 
 # install PHP extensions
 COPY --from=mlocati/php-extension-installer:latest /usr/bin/install-php-extensions /usr/local/bin/
@@ -168,6 +116,16 @@ COPY --chown=docker:docker . .
 
 RUN composer install --no-progress
 
-#RUN mkdir /var/www/public_assets
-COPY --from=vue-distribution --chown=docker:docker /var/www/html/public_assets /var/www/public/assets
+RUN npm install 
+RUN npm run build
 
+#RUN mkdir /var/www/public_assets
+#COPY --from=vue-distribution --chown=docker:docker /var/www/html/public_assets /var/www/public/assets
+
+#USER root
+
+
+# ------------------------------------------------------------
+
+#RUN npm install 
+#RUN npm run build
