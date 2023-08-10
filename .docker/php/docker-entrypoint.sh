@@ -37,7 +37,7 @@ fi
 
 
 # wait for DB to be ready
-timeout 3m sh -c 'php artisan db:monitor > /dev/null 2>&1; do echo "Waiting for database connection..." && sleep 5; done'
+timeout 3m sh -c 'until php artisan db:monitor > /dev/null 2>&1; do echo "Waiting for database connection..." && sleep 5; done'
 if [ $? -ne 0 ]; then
   echo "timed out while waiting for database to be ready"
   exit 1
@@ -46,7 +46,7 @@ fi
 # run migrations
 if [ "${RUN_MIGRATIONS:-false}" = "true" ]; then
   echo "running migrations ..."
-	cd $workdir && php artisan db:migrate;
+  cd $workdir && php artisan db:migrate;
 else
   echo "RUN_MIGRATIONS set to false, skipping migrations"
 fi
@@ -55,7 +55,7 @@ fi
 # run seeding
 if [ "${RUN_SEEDING:-false}" = "true" ]; then
   echo "seeding the database ..."
-	cd $workdir && php artisan db:seed;
+  cd $workdir && php artisan db:seed;
 else
   echo "RUN_SEEDING set to false, skipping seeding scripts"
 fi
