@@ -42,7 +42,7 @@ abstract class DuskTestCase extends BaseTestCase
         })->all());
 
         return RemoteWebDriver::create(
-            $_ENV['DUSK_DRIVER_URL'] ?? '/',
+            env('DUSK_DRIVER_URL', '/'),
             DesiredCapabilities::chrome()->setCapability(
                 ChromeOptions::CAPABILITY, $options
             )
@@ -55,7 +55,7 @@ abstract class DuskTestCase extends BaseTestCase
     protected function hasHeadlessDisabled(): bool
     {
         return isset($_SERVER['DUSK_HEADLESS_DISABLED']) ||
-               isset($_ENV['DUSK_HEADLESS_DISABLED']);
+               env('DUSK_HEADLESS_DISABLED', false);
     }
 
     /**
@@ -64,6 +64,6 @@ abstract class DuskTestCase extends BaseTestCase
     protected function shouldStartMaximized(): bool
     {
         return isset($_SERVER['DUSK_START_MAXIMIZED']) ||
-               isset($_ENV['DUSK_START_MAXIMIZED']);
+               env('DUSK_START_MAXIMIZED', false);
     }
 }
