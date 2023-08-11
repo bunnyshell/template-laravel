@@ -4,6 +4,16 @@ set -e
 
 workdir=$(pwd);
 
+# run pre-release scripts
+if [ "${RUN_CACHE_CONFIG:-false}" = "true" ]; then
+    echo "caching config"
+    cd $workdir && php artisan config:cache;
+
+else
+  echo "RUN_CACHE_CONFIG set to false, skipping artisan config:cache"
+fi
+
+
 # run warmup scripts (cache with new env variables)
 
 # run pre-release scripts
