@@ -14,7 +14,7 @@ class LoginTest extends DuskTestCase
     public function testExample(): void
     {
         $this->browse(function (Browser $browser) {
-            $browser->visit('http://laravel10-template-laravel.test-1/')
+            $browser->visit(env('APP_URL', '/'))
                     ->assertSee('Laravel');
         });
     }

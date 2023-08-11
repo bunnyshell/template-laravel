@@ -19,9 +19,12 @@ abstract class DuskTestCase extends BaseTestCase
      */
     public static function prepare(): void
     {
+        return;
+        /*
         if (! static::runningInSail()) {
             static::startChromeDriver();
         }
+        */
     }
 
     /**
@@ -39,7 +42,7 @@ abstract class DuskTestCase extends BaseTestCase
         })->all());
 
         return RemoteWebDriver::create(
-            $_ENV['DUSK_DRIVER_URL'] ?? 'http://laravel10-template-selenium-1:4444',
+            $_ENV['DUSK_DRIVER_URL'] ?? '/',
             DesiredCapabilities::chrome()->setCapability(
                 ChromeOptions::CAPABILITY, $options
             )
