@@ -115,7 +115,7 @@ components:
 security:
     access:
         allowedIps:
-            - 0.0.0.0/32
+            - 0.0.0.0/0
         realIpTrustedProxies: null
 volumes:
     -
