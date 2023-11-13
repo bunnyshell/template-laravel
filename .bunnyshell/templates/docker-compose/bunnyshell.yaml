@@ -1,7 +1,6 @@
 kind: Environment
 name: laravel-1
 type: primary
-urlHandle: xkeojr
 environmentVariables:
     SAMPLE_VAR: '{{env.unique}}'
 components:
