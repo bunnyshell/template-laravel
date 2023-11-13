@@ -1,0 +1,17 @@
+name: Laravel 10
+description: This is a boilerplate for creating a new Laravel environment with MySQL, Redis, Selenium.
+tags: [ php, laravel, vue, typescript, mysql, redis, selenium ]
+icons: [ php, laravel, vue, typescript, mysql, redis, selenium ]
+stack:
+  packages:
+    - name: PHP
+      version: '8.2'
+    - name: Laravel
+      version: '10.1'
+    - name: Vue
+      version: '3.1'
+    - name: Typescript
+      version: '4.4'
+    - name: MySQL
+      version: '8.0'
+discoverable: true
