@@ -11,6 +11,12 @@ An [Environment in Bunnyshell](https://documentation.bunnyshell.com/docs/environ
 
 # Environment overview
 
+## Migrations
+Database seeding is controlled by the RUN_MIGRATIONS environment variable (default is false).
+
+## Seeding
+Database seeding is controlled by the RUN_SEEDING environment variable (default is false).
+If enabled, a user is created with email "bunnyshell@example.com", password "bunnyshell".
 # How to use this Template
 
 You can create Environments from a [Bunnyshell Template](https://documentation.bunnyshell.com/docs/templates-what-are-templates); these Environments can be used for development.
