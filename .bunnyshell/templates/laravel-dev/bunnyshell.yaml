@@ -1,0 +1,124 @@
+kind: Environment
+name: laravel-dev
+type: primary
+environmentVariables:
+    SAMPLE_VAR: '{{env.unique}}'
+components:
+    -
+        kind: Database
+        name: database
+        gitRepo: 'https://github.com/alexo-bunnyshell/bunnyshell-laravel10.git'
+        gitBranch: main
+        gitApplicationPath: .docker/database
+        dockerCompose:
+            build:
+                context: .docker/database
+            command: '--default-authentication-plugin=mysql_native_password'
+            environment:
+                MYSQL_DATABASE: DATABASE
+                MYSQL_PASSWORD: PASSWORD
+                MYSQL_ROOT_PASSWORD: ROOTPASSWORD
+                MYSQL_USER: USER
+            ports:
+                - '3306:3306'
+        volumes:
+            -
+                name: database-data
+                mount: /var/lib/mysql
+                subPath: ''
+    -
+        kind: SidecarContainer
+        name: nginx
+        gitRepo: 'https://github.com/alexo-bunnyshell/bunnyshell-laravel10.git'
+        gitBranch: main
+        gitApplicationPath: .docker/nginx
+        dockerCompose:
+            build:
+                context: .docker/nginx
+            environment:
+                PHP_HOST: localhost
+            ports:
+                - '8080:8080'
+    -
+        kind: Application
+        name: laravel
+        gitRepo: 'https://github.com/alexo-bunnyshell/bunnyshell-laravel10.git'
+        gitBranch: main
+        gitApplicationPath: .
+        dockerCompose:
+            build:
+                context: .
+                dockerfile: .docker/php/Dockerfile
+                target: dev
+            environment:
+                APP_DEBUG: ''
+                APP_ENV: dev
+                APP_KEY: '12345678901234567890123456789012'
+                APP_NAME: 'Instance {{env.unique}} of Larvel Template'
+                APP_URL: '{{components.laravel.ingress.hosts[0].url}}'
+                BROADCAST_DRIVER: log
+                CACHE_DRIVER: redis
+                DB_DATABASE: '{{ components.database.vars.MYSQL_DATABASE }}'
+                DB_HOST: database
+                DB_PASSWORD: '{{ components.database.vars.MYSQL_PASSWORD }}'
+                DB_PORT_READ: '3306'
+                DB_PORT_WRITE: '3306'
+                DB_USERNAME: '{{ components.database.vars.MYSQL_USER }}'
+                LOG_CHANNEL: stdout
+                PHP_MEMORY_LIMIT: 1G
+                PHP_OPCACHE_ENABLE: '0'
+                PHP_OPCACHE_VALIDATE_TIMESTAMPS: '0'
+                REDIS_HOST: redis
+                REDIS_PORT: '6379'
+                RUN_PRE_RELEASE: 'false'
+                RUN_WARMUP: 'false'
+                SESSION_DRIVER: redis
+                SESSION_LIFETIME: '120'
+                XDEBUG_IDE_KEY: PHPSTORM
+                XDEBUG_MODE: 'off'
+                XDEBUG_START_WITH_REQUEST: 'yes'
+            ports:
+                - '9000:9000'
+                - '8080:8080'
+        pod:
+            sidecar_containers:
+                -
+                    from: nginx
+                    name: nginx
+                    shared_paths:
+                        -
+                            path: /var/www
+                            target:
+                                path: /var/www
+                                container: '@parent'
+                            initial_contents: '@target'
+        hosts:
+            -
+                hostname: 'web-{{ env.base_domain }}'
+                path: /
+                servicePort: 8080
+    -
+        kind: Service
+        name: redis
+        gitRepo: 'https://github.com/alexo-bunnyshell/bunnyshell-laravel10.git'
+        gitBranch: main
+        gitApplicationPath: .docker/redis
+        dockerCompose:
+            healthcheck:
+                test:
+                    - CMD-SHELL
+                    - /healthchecks/redis.sh
+                interval: 5s
+            image: 'redis:alpine'
+            ports:
+                - '6379:6379'
+security:
+    access:
+        allowedIps:
+            - 0.0.0.0/0
+        realIpTrustedProxies: null
+volumes:
+    -
+        name: database-data
+        size: 1Gi
+        type: network

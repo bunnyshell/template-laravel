@@ -1,5 +1,5 @@
 kind: Environment
-name: laravel-1
+name: laravel-prod
 type: primary
 environmentVariables:
     SAMPLE_VAR: '{{env.unique}}'
@@ -49,10 +49,10 @@ components:
             build:
                 context: .
                 dockerfile: .docker/php/Dockerfile
-                target: dev
+                target: prod
             environment:
                 APP_DEBUG: ''
-                APP_ENV: dev
+                APP_ENV: prod
                 APP_KEY: '12345678901234567890123456789012'
                 APP_NAME: 'Instance {{env.unique}} of Larvel Template'
                 APP_URL: '{{components.laravel.ingress.hosts[0].url}}'

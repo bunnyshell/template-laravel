@@ -1,0 +1,17 @@
+name: Laravel 10 Production
+description: Laravel environment with MySQL, Redis. This template can be used for bootstrapping an application.
+tags: [ php, laravel, vue, typescript, mysql, redis ]
+icons: [ php, laravel, vue, typescript, mysql, redis ]
+stack:
+  packages:
+    - name: PHP
+      version: '8.2'
+    - name: Laravel
+      version: '10.1'
+    - name: Vue
+      version: '3.1'
+    - name: Typescript
+      version: '4.4'
+    - name: MySQL
+      version: '8.0'
+discoverable: true
