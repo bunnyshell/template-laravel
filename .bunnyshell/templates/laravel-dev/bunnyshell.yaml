@@ -70,6 +70,8 @@ components:
                 PHP_OPCACHE_VALIDATE_TIMESTAMPS: '0'
                 REDIS_HOST: redis
                 REDIS_PORT: '6379'
+                RUN_MIGRATIONS: 'true'
+                RUN_SEEDING: 'true'
                 RUN_PRE_RELEASE: 'false'
                 RUN_WARMUP: 'false'
                 SESSION_DRIVER: redis

@@ -72,6 +72,8 @@ components:
                 REDIS_PORT: '6379'
                 RUN_PRE_RELEASE: 'false'
                 RUN_WARMUP: 'false'
+                RUN_MIGRATIONS: 'false'
+                RUN_SEEDING: 'false'
                 SESSION_DRIVER: redis
                 SESSION_LIFETIME: '120'
                 XDEBUG_IDE_KEY: PHPSTORM
