@@ -7,7 +7,7 @@ components:
     -
         kind: Database
         name: database
-        gitRepo: 'https://github.com/alexo-bunnyshell/bunnyshell-laravel10.git'
+        gitRepo: 'https://github.com/bunnyshell/template-laravel.git'
         gitBranch: main
         gitApplicationPath: .docker/database
         dockerCompose:
@@ -29,7 +29,7 @@ components:
     -
         kind: SidecarContainer
         name: nginx
-        gitRepo: 'https://github.com/alexo-bunnyshell/bunnyshell-laravel10.git'
+        gitRepo: 'https://github.com/bunnyshell/template-laravel.git'
         gitBranch: main
         gitApplicationPath: .docker/nginx
         dockerCompose:
@@ -42,7 +42,7 @@ components:
     -
         kind: Application
         name: laravel
-        gitRepo: 'https://github.com/alexo-bunnyshell/bunnyshell-laravel10.git'
+        gitRepo: 'https://github.com/bunnyshell/template-laravel.git'
         gitBranch: main
         gitApplicationPath: .
         dockerCompose:
@@ -100,7 +100,7 @@ components:
     -
         kind: Service
         name: redis
-        gitRepo: 'https://github.com/alexo-bunnyshell/bunnyshell-laravel10.git'
+        gitRepo: 'https://github.com/bunnyshell/template-laravel.git'
         gitBranch: main
         gitApplicationPath: .docker/redis
         dockerCompose:
