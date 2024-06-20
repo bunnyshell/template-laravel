@@ -2,6 +2,7 @@ name: Laravel 10 Development
 description: This is a boilerplate for creating a new Laravel environment with MySQL, Redis, Selenium.
 tags: [ php, laravel, vue, typescript, mysql, redis, selenium ]
 icons: [ php, laravel, vue, typescript, mysql, redis, selenium ]
+categories: [ framework ]
 stack:
   packages:
     - name: PHP
