@@ -2,6 +2,7 @@ name: Laravel 10 Production
 description: Laravel environment with MySQL, Redis. This template can be used for bootstrapping an application.
 tags: [ php, laravel, vue, typescript, mysql, redis ]
 icons: [ php, laravel, vue, typescript, mysql, redis ]
+categories: [ framework ]
 stack:
   packages:
     - name: PHP
